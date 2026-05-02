@@ -1,0 +1,19 @@
+.line-waves-container {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: #050505;
+  /* Base color to ensure it's not white */
+}
+
+.line-waves-container canvas {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+  opacity: 1;
+  visibility: visible;
+}

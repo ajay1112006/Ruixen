@@ -1,0 +1,411 @@
+/* ===== Members Page Styles ===== */
+
+.membersPage {
+  padding-top: 120px;
+  min-height: 100vh;
+  position: relative;
+}
+
+/* --- Hero Section --- */
+.heroSection {
+  text-align: center;
+  margin-bottom: 5rem;
+  position: relative;
+}
+
+.heroTitle {
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  margin-bottom: 1rem;
+  font-weight: 800;
+  letter-spacing: -1px;
+}
+
+.heroSubtitle {
+  font-size: 1.2rem;
+  opacity: 0.6;
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+/* --- Founder Spotlight --- */
+.founderSpotlight {
+  margin-bottom: 6rem;
+}
+
+.founderCard {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 0;
+  align-items: stretch;
+  overflow: hidden;
+}
+
+.founderImageWrapper {
+  position: relative;
+  height: 100%;
+  min-height: 480px;
+  overflow: hidden;
+}
+
+.founderImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 20%;
+  display: block;
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.founderImageWrapper:hover .founderImage {
+  transform: scale(1.05);
+}
+
+.founderImageOverlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to right,
+    transparent 50%,
+    rgba(5, 5, 5, 0.9) 100%
+  );
+  pointer-events: none;
+}
+
+.founderImageGlow {
+  position: absolute;
+  bottom: -60px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 200px;
+  height: 200px;
+  background: radial-gradient(circle, var(--primary) 0%, transparent 70%);
+  filter: blur(60px);
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+.founderInfo {
+  padding: 3.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+}
+
+.founderBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 1rem;
+  border-radius: 50px;
+  border: 1px solid rgba(0, 208, 255, 0.3);
+  background: rgba(0, 208, 255, 0.08);
+  color: var(--primary);
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 1.5rem;
+  width: fit-content;
+}
+
+.founderBadgeDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--primary);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(1.5); }
+}
+
+.founderName {
+  font-size: 2.8rem;
+  font-weight: 800;
+  margin-bottom: 0.5rem;
+  letter-spacing: -1px;
+  line-height: 1.1;
+}
+
+.founderRole {
+  font-size: 1rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  margin-bottom: 0.5rem;
+  background: linear-gradient(135deg, #00d0ff, #ff00aa);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.founderEducation {
+  font-size: 0.9rem;
+  opacity: 0.5;
+  margin-bottom: 2rem;
+  font-style: italic;
+}
+
+.founderDivider {
+  width: 60px;
+  height: 2px;
+  background: linear-gradient(90deg, var(--primary), var(--accent));
+  border: none;
+  margin-bottom: 2rem;
+}
+
+.founderSkills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.skillBadge {
+  padding: 0.45rem 1rem;
+  border-radius: 50px;
+  border: 1px solid var(--surface-border);
+  background: rgba(255, 255, 255, 0.04);
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.8);
+  transition: all 0.3s ease;
+  cursor: default;
+}
+
+.skillBadge:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+  background: rgba(0, 208, 255, 0.08);
+  box-shadow: 0 0 15px rgba(0, 208, 255, 0.15);
+  transform: translateY(-2px);
+}
+
+/* --- Team Grid --- */
+.teamSection {
+  margin-bottom: 4rem;
+}
+
+.sectionLabel {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 3rem;
+}
+
+.sectionLabelLine {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, var(--surface-border), transparent);
+}
+
+.sectionLabelText {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  opacity: 0.5;
+  white-space: nowrap;
+  font-weight: 600;
+}
+
+.teamGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+}
+
+/* --- Member Card --- */
+.memberCard {
+  position: relative;
+  overflow: hidden;
+}
+
+.memberCardInner {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.memberImageContainer {
+  position: relative;
+  width: 100%;
+  height: 320px;
+  overflow: hidden;
+}
+
+.memberImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 15%;
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+    filter 0.6s ease;
+  filter: grayscale(30%) brightness(0.9);
+}
+
+.memberCardInner:hover .memberImage {
+  transform: scale(1.08);
+  filter: grayscale(0%) brightness(1);
+}
+
+.memberImageGradient {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(5, 5, 5, 0.95) 0%,
+    rgba(5, 5, 5, 0.4) 40%,
+    transparent 100%
+  );
+  pointer-events: none;
+}
+
+.memberDetails {
+  padding: 1.8rem 1.5rem 1.5rem;
+  position: relative;
+  min-height: 160px;
+  display: flex;
+  flex-direction: column;
+}
+
+.memberName {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 0.3rem;
+  letter-spacing: -0.5px;
+}
+
+.memberRole {
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 0.4rem;
+}
+
+.memberRolePrimary {
+  color: var(--primary);
+}
+
+.memberRoleSecondary {
+  color: var(--secondary);
+}
+
+.memberRoleAccent {
+  color: var(--accent);
+}
+
+.memberEducation {
+  font-size: 0.78rem;
+  opacity: 0.4;
+  margin-bottom: 1.2rem;
+  font-style: italic;
+}
+
+.memberSkills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: auto;
+}
+
+.memberSkillBadge {
+  padding: 0.3rem 0.7rem;
+  border-radius: 50px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.03);
+  font-size: 0.7rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.6);
+  transition: all 0.3s ease;
+}
+
+.memberCardInner:hover .memberSkillBadge {
+  border-color: rgba(255, 255, 255, 0.2);
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/* --- Bottom CTA --- */
+.ctaSection {
+  text-align: center;
+  padding: 5rem 0 2rem;
+}
+
+.ctaTitle {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.ctaSubtitle {
+  opacity: 0.5;
+  margin-bottom: 2rem;
+  font-size: 1rem;
+}
+
+/* --- Decorative glow behind cards --- */
+.cardGlow {
+  position: absolute;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  filter: blur(60px);
+  opacity: 0.2;
+  pointer-events: none;
+  z-index: 0;
+  top: 20%;
+  left: 50%;
+  transform: translateX(-50%);
+  transition: opacity 0.6s ease;
+}
+
+.memberCardInner:hover .cardGlow {
+  opacity: 0.35;
+}
+
+.cardGlowPrimary { background: var(--primary); }
+.cardGlowSecondary { background: var(--secondary); }
+.cardGlowAccent { background: var(--accent); }
+
+/* --- Responsive --- */
+@media (max-width: 1024px) {
+  .teamGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .founderCard {
+    grid-template-columns: 1fr;
+  }
+
+  .founderImageWrapper {
+    min-height: 350px;
+  }
+
+  .founderImageOverlay {
+    background: linear-gradient(
+      to bottom,
+      transparent 50%,
+      rgba(5, 5, 5, 0.9) 100%
+    );
+  }
+
+  .founderInfo {
+    padding: 2rem 1.5rem;
+  }
+
+  .founderName {
+    font-size: 2rem;
+  }
+
+  .teamGrid {
+    grid-template-columns: 1fr;
+    max-width: 420px;
+    margin: 0 auto;
+  }
+}
