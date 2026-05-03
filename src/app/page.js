@@ -1,10 +1,12 @@
 "use client";
 import React, { useRef } from 'react';
-import { motion } from 'framer-motion';
+import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import { ArrowRight, Code, Cpu, Globe, Rocket } from 'lucide-react';
 import Link from 'next/link';
 import BorderGlow from '@/components/BorderGlow';
 import VariableProximity from '@/components/VariableProximity';
+import BounceCards from '@/components/BounceCards';
+import SpotlightCard from '@/components/SpotlightCard';
 
 const teamMembers = [
   {
@@ -120,15 +122,16 @@ export default function Home() {
                 backgroundColor="transparent"
                 colors={['#00d0ff', '#0800ff', '#ff00aa']}
               >
-                <button className="glow-btn" style={{ 
+                <Link href="/contact" className="glow-btn" style={{ 
                   display: 'flex',
                   alignItems: 'center',
                   gap: '0.5rem',
                   border: 'none',
-                  boxShadow: 'none'
+                  boxShadow: 'none',
+                  textDecoration: 'none'
                 }}>
                   Start Your Project <ArrowRight size={18} />
-                </button>
+                </Link>
               </BorderGlow>
 
             </motion.div>
@@ -205,6 +208,42 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Visual Team Section */}
+      <section style={{ padding: '4rem 0', overflow: 'hidden' }}>
+        <div className="container" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+          <div style={{ textAlign: 'center', marginBottom: '2.5rem' }}>
+            <h2 style={{ fontSize: '2.5rem', marginBottom: '0.8rem', fontWeight: '800' }}>The <span className="text-gradient">Boyz</span></h2>
+            <p style={{ opacity: 0.6, fontSize: '1.2rem' }}>The Pillars of <span className="text-gradient" style={{ fontWeight: '700' }}>Ruixen</span></p>
+          </div>
+          <BounceCards
+            images={[
+              "/team/ajay.jpeg",
+              "/team/revin.jpeg",
+              "/team/aravind.jpeg",
+              "/team/manekandan.jpeg"
+            ]}
+            containerWidth={900}
+            containerHeight={450}
+            animationDelay={1}
+            animationStagger={0.08}
+            easeType="elastic.out(1, 0.5)"
+            transformStyles={[
+              "rotate(-10deg) translate(-250px)",
+              "rotate(-5deg) translate(-100px)",
+              "rotate(5deg) translate(100px)",
+              "rotate(10deg) translate(250px)"
+            ]}
+            enableHover
+            objectPositions={[
+              "center top",
+              "center 10%",
+              "center",
+              "center"
+            ]}
+          />
+        </div>
+      </section>
+
       {/* Features Section */}
       <section style={{ padding: '8rem 0', background: 'rgba(255,255,255,0.02)' }}>
         <div className="container">
@@ -222,16 +261,19 @@ export default function Home() {
               icon={<Code size={32} color="var(--primary)" />} 
               title="Next-Gen Frontend" 
               description="Ultra-fast, responsive interfaces built with Next.js and Framer Motion."
+              spotlightColor="rgba(0, 208, 255, 0.2)"
             />
             <FeatureCard 
               icon={<Cpu size={32} color="var(--secondary)" />} 
               title="Powerful Backend" 
               description="Scalable serverless architectures and robust API integrations."
+              spotlightColor="rgba(8, 0, 255, 0.2)"
             />
             <FeatureCard 
               icon={<Globe size={32} color="var(--accent)" />} 
               title="Global Scale" 
               description="Optimized for performance and SEO to reach users everywhere."
+              spotlightColor="rgba(255, 0, 170, 0.2)"
             />
           </div>
         </div>
@@ -264,23 +306,65 @@ export default function Home() {
   );
 }
 
-const FeatureCard = ({ icon, title, description }) => {
+const FeatureCard = ({ icon, title, description, spotlightColor }) => {
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+
+  const mouseXSpring = useSpring(x, { stiffness: 300, damping: 20 });
+  const mouseYSpring = useSpring(y, { stiffness: 300, damping: 20 });
+
+  const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["10deg", "-10deg"]);
+  const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-10deg", "10deg"]);
+
+  const handleMouseMove = (e) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const width = rect.width;
+    const height = rect.height;
+    const mouseX = e.clientX - rect.left;
+    const mouseY = e.clientY - rect.top;
+    
+    // Tilt logic
+    x.set(mouseX / width - 0.5);
+    y.set(mouseY / height - 0.5);
+
+    // Spotlight logic
+    e.currentTarget.style.setProperty('--mouse-x', `${mouseX}px`);
+    e.currentTarget.style.setProperty('--mouse-y', `${mouseY}px`);
+    e.currentTarget.style.setProperty('--spotlight-color', spotlightColor || 'rgba(0, 229, 255, 0.2)');
+  };
+
+  const handleMouseLeave = () => {
+    x.set(0);
+    y.set(0);
+  };
+
   return (
-    <motion.div
-      whileHover={{ y: -10 }}
-      className="glass"
-      style={{
-        padding: '2.5rem',
-        borderRadius: '20px',
-        display: 'flex',
-        flexDirection: 'column',
-        gap: '1rem',
-        transition: 'border 0.3s ease'
-      }}
-    >
-      <div style={{ marginBottom: '0.5rem' }}>{icon}</div>
-      <h3 style={{ fontSize: '1.5rem' }}>{title}</h3>
-      <p style={{ opacity: 0.6, lineHeight: 1.6 }}>{description}</p>
-    </motion.div>
+    <div style={{ perspective: 1000 }}>
+      <motion.div
+        onMouseMove={handleMouseMove}
+        onMouseLeave={handleMouseLeave}
+        whileHover={{ scale: 1.02 }}
+        className="card-spotlight interactive"
+        style={{
+          rotateX,
+          rotateY,
+          transformStyle: "preserve-3d",
+          padding: '2.5rem',
+          borderRadius: '20px',
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '1rem',
+          transition: 'border 0.3s ease, box-shadow 0.3s ease',
+          boxShadow: '0 10px 30px -10px rgba(0,0,0,0.5)',
+          backgroundColor: 'rgba(17, 17, 17, 0.8)',
+          backdropFilter: 'blur(12px)',
+          border: '1px solid var(--surface-border)'
+        }}
+      >
+        <div style={{ marginBottom: '0.5rem', transform: 'translateZ(30px)' }}>{icon}</div>
+        <h3 style={{ fontSize: '1.5rem', transform: 'translateZ(20px)' }}>{title}</h3>
+        <p style={{ opacity: 0.6, lineHeight: 1.6, transform: 'translateZ(10px)' }}>{description}</p>
+      </motion.div>
+    </div>
   );
 };

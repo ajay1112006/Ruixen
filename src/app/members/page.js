@@ -1,6 +1,6 @@
 "use client";
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
 import BorderGlow from '@/components/BorderGlow';
@@ -60,6 +60,100 @@ const itemVariants = {
   },
 };
 
+const MemberCard = ({ member, index }) => {
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+
+  const mouseXSpring = useSpring(x, { stiffness: 300, damping: 20 });
+  const mouseYSpring = useSpring(y, { stiffness: 300, damping: 20 });
+
+  const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["10deg", "-10deg"]);
+  const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-10deg", "10deg"]);
+
+  const handleMouseMove = (e) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const width = rect.width;
+    const height = rect.height;
+    const mouseX = e.clientX - rect.left;
+    const mouseY = e.clientY - rect.top;
+    x.set(mouseX / width - 0.5);
+    y.set(mouseY / height - 0.5);
+  };
+
+  const handleMouseLeave = () => {
+    x.set(0);
+    y.set(0);
+  };
+
+  return (
+    <div style={{ perspective: 1200 }}>
+      <motion.div
+        variants={itemVariants}
+        onMouseMove={handleMouseMove}
+        onMouseLeave={handleMouseLeave}
+        whileHover={{ scale: 1.02 }}
+        className="interactive"
+        style={{
+          position: 'relative',
+          rotateX,
+          rotateY,
+          transformStyle: "preserve-3d",
+        }}
+      >
+        <BorderGlow
+          borderRadius={20}
+          glowRadius={50}
+          glowIntensity={1.2}
+          backgroundColor="rgba(255,255,255,0.02)"
+          colors={['#00d0ff', '#0800ff', '#ff00aa']}
+        >
+          <div className={styles.founderCard} style={{ transformStyle: 'preserve-3d' }}>
+            <div className={styles.founderImageWrapper} style={{ transform: 'translateZ(15px)' }}>
+              <Image
+                src={member.image}
+                alt={member.name}
+                fill
+                sizes="(max-width: 768px) 100vw, 50vw"
+                className={styles.founderImage}
+                style={{ objectPosition: member.objectPosition || 'center 20%' }}
+                priority={index === 0}
+              />
+              <div className={styles.founderImageOverlay} />
+              <div className={styles.founderImageGlow} />
+            </div>
+
+            <div className={styles.founderInfo} style={{ transform: 'translateZ(35px)' }}>
+              <div className={styles.founderBadge}>
+                <span className={styles.founderBadgeDot} />
+                {member.role}
+              </div>
+              <h2 className={styles.founderName}>{member.name}</h2>
+              <p className={styles.founderRole}>{member.role}</p>
+              {member.education && (
+                <p className={styles.founderEducation}>{member.education}</p>
+              )}
+              <hr className={styles.founderDivider} />
+              <div className={styles.founderSkills}>
+                {member.skills.map((skill, i) => (
+                  <motion.span
+                    key={i}
+                    className={styles.skillBadge}
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ delay: 0.6 + i * 0.1, duration: 0.4 }}
+                  >
+                    {skill}
+                  </motion.span>
+                ))}
+              </div>
+            </div>
+          </div>
+        </BorderGlow>
+      </motion.div>
+    </div>
+  );
+};
+
 export default function Members() {
   return (
     <div className={styles.membersPage}>
@@ -81,69 +175,15 @@ export default function Members() {
         </motion.div>
 
         {/* Team Section */}
-        <div className={styles.teamSection}>
+        <div className={styles.teamSection} style={{ maxWidth: '1000px', margin: '0 auto 4rem' }}>
           <motion.div
             variants={containerVariants}
             initial="hidden"
             animate="visible"
-            style={{ display: 'flex', flexDirection: 'column', gap: '4rem' }}
+            style={{ display: 'flex', flexDirection: 'column', gap: '2.5rem' }}
           >
             {allMembers.map((member, index) => (
-              <motion.div
-                key={index}
-                variants={itemVariants}
-                style={{ position: 'relative' }}
-              >
-                <BorderGlow
-                  borderRadius={20}
-                  glowRadius={50}
-                  glowIntensity={1.2}
-                  backgroundColor="rgba(255,255,255,0.02)"
-                  colors={['#00d0ff', '#0800ff', '#ff00aa']}
-                >
-                  <div className={styles.founderCard}>
-                    <div className={styles.founderImageWrapper}>
-                      <Image
-                        src={member.image}
-                        alt={member.name}
-                        fill
-                        sizes="(max-width: 768px) 100vw, 50vw"
-                        className={styles.founderImage}
-                        style={{ objectPosition: member.objectPosition || 'center 20%' }}
-                        priority={index === 0}
-                      />
-                      <div className={styles.founderImageOverlay} />
-                      <div className={styles.founderImageGlow} />
-                    </div>
-
-                    <div className={styles.founderInfo}>
-                      <div className={styles.founderBadge}>
-                        <span className={styles.founderBadgeDot} />
-                        {member.role}
-                      </div>
-                      <h2 className={styles.founderName}>{member.name}</h2>
-                      <p className={styles.founderRole}>{member.role}</p>
-                      {member.education && (
-                        <p className={styles.founderEducation}>{member.education}</p>
-                      )}
-                      <hr className={styles.founderDivider} />
-                      <div className={styles.founderSkills}>
-                        {member.skills.map((skill, i) => (
-                          <motion.span
-                            key={i}
-                            className={styles.skillBadge}
-                            initial={{ opacity: 0, scale: 0.8 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            transition={{ delay: 0.6 + i * 0.1, duration: 0.4 }}
-                          >
-                            {skill}
-                          </motion.span>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                </BorderGlow>
-              </motion.div>
+              <MemberCard key={index} member={member} index={index} />
             ))}
           </motion.div>
         </div>
@@ -172,7 +212,7 @@ export default function Members() {
             >
               <Link
                 href="/contact"
-                className="glow-btn"
+                className="glow-btn interactive"
                 style={{
                   padding: '15px 40px',
                   fontSize: '1.1rem',

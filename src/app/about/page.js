@@ -19,7 +19,7 @@ export default function About() {
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '4rem', alignItems: 'center' }}>
             <div>
               <p style={{ fontSize: '1.2rem', opacity: 0.9, lineHeight: 1.8, marginBottom: '2rem' }}>
-                Founded in 2024, Ruixen was born out of a desire to bridge the gap between high-end design and technical excellence. 
+                Founded in 2026, Ruixen was born out of a desire to bridge the gap between high-end design and technical excellence. 
                 We believe that every digital touchpoint is an opportunity to inspire and engage.
               </p>
               <p style={{ fontSize: '1.2rem', opacity: 0.9, lineHeight: 1.8 }}>

@@ -6,16 +6,32 @@ import BorderGlow from '@/components/BorderGlow';
 
 export default function Contact() {
   const [submitted, setSubmitted] = useState(false);
-  const [formData, setFormData] = useState({ name: '', email: '', message: '' });
+  const [formData, setFormData] = useState({ name: '', email: '', phone: '', message: '' });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setSubmitted(true);
-    // Simulate API call
-    setTimeout(() => {
-      setSubmitted(false);
-      setFormData({ name: '', email: '', message: '' });
-    }, 5000);
+    try {
+      const response = await fetch('/api/messages', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+      
+      if (response.ok) {
+        setSubmitted(true);
+        setTimeout(() => {
+          setSubmitted(false);
+          setFormData({ name: '', email: '', phone: '', message: '' });
+        }, 5000);
+      } else {
+        alert('Failed to send message. Please try again.');
+      }
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      alert('An error occurred. Please try again later.');
+    }
   };
 
   return (
@@ -49,7 +65,7 @@ export default function Contact() {
                         required
                         value={formData.name}
                         onChange={(e) => setFormData({...formData, name: e.target.value})}
-                        placeholder="John Doe"
+                        placeholder="Type here"
                         className="custom-input"
                       />
                     </div>
@@ -61,7 +77,18 @@ export default function Contact() {
                         required
                         value={formData.email}
                         onChange={(e) => setFormData({...formData, email: e.target.value})}
-                        placeholder="john@example.com"
+                        placeholder="Type here"
+                        className="custom-input"
+                      />
+                    </div>
+
+                    <div className="form-group">
+                      <label style={{ display: 'block', marginBottom: '0.8rem', fontWeight: '500', opacity: 0.8 }}>Phone Number</label>
+                      <input 
+                        type="tel" 
+                        value={formData.phone}
+                        onChange={(e) => setFormData({...formData, phone: e.target.value})}
+                        placeholder="Type here"
                         className="custom-input"
                       />
                     </div>
@@ -72,7 +99,7 @@ export default function Contact() {
                         required
                         value={formData.message}
                         onChange={(e) => setFormData({...formData, message: e.target.value})}
-                        placeholder="Tell us about your vision..."
+                        placeholder="Type here"
                         className="custom-input"
                         rows="5"
                       ></textarea>
