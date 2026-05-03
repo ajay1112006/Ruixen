@@ -1,0 +1,118 @@
+.projectsPage {
+  min-height: 100vh;
+  padding: 10rem 0 6rem;
+  background: transparent;
+  position: relative;
+  overflow: hidden;
+}
+
+.heroSection {
+  text-align: center;
+  margin-bottom: 6rem;
+}
+
+.heroTitle {
+  font-size: clamp(2.5rem, 6vw, 4rem);
+  font-weight: 800;
+  margin-bottom: 1.5rem;
+  letter-spacing: -1px;
+}
+
+.heroSubtitle {
+  font-size: 1.2rem;
+  opacity: 0.6;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.projectsGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 3rem;
+  max-width: 1000px;
+  margin: 0 auto 6rem;
+}
+
+.projectCard {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 2rem;
+  padding: 2rem;
+  border: 1px solid var(--surface-border);
+  border-radius: 24px;
+  transition: all 0.3s ease;
+}
+
+@media (max-width: 768px) {
+  .projectCard {
+    grid-template-columns: 1fr;
+  }
+}
+
+.projectImageWrapper {
+  position: relative;
+  aspect-ratio: 16/10;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+
+.projectImage {
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.projectCard:hover .projectImage {
+  transform: scale(1.05);
+}
+
+.projectContent {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.projectTitle {
+  font-size: 2rem;
+  font-weight: 800;
+  margin-bottom: 1rem;
+}
+
+.projectDescription {
+  font-size: 1.05rem;
+  line-height: 1.6;
+  opacity: 0.7;
+  margin-bottom: 2rem;
+}
+
+.projectTech {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.techTag {
+  padding: 0.4rem 1rem;
+  border-radius: 50px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--primary);
+}
+
+.ctaSection {
+  text-align: center;
+}
+
+.ctaTitle {
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin-bottom: 1rem;
+}
+
+.ctaSubtitle {
+  opacity: 0.7;
+  margin-bottom: 2.5rem;
+}

@@ -61,24 +61,24 @@ const Navbar = () => {
           <BorderGlow
             borderRadius={8}
             glowRadius={15}
-            glowIntensity={0.8}
-            backgroundColor="transparent"
-            colors={['#00d0ff', '#0800ff', '#ff00aa']}
-          >
-            <Link href="/admin" className="glow-btn" style={{ textDecoration: 'none', border: 'none', boxShadow: 'none', display: 'block', padding: '10px 20px' }}>
-              Admin
-            </Link>
-          </BorderGlow>
-
-          <BorderGlow
-            borderRadius={8}
-            glowRadius={15}
             glowIntensity={1.2}
             backgroundColor="transparent"
             colors={['#00d0ff', '#0800ff', '#ff00aa']}
           >
             <Link href="/contact" className="glow-btn" style={{ textDecoration: 'none', border: 'none', boxShadow: 'none', display: 'block', padding: '10px 24px' }}>
               Get in Touch
+            </Link>
+          </BorderGlow>
+
+          <BorderGlow
+            borderRadius={8}
+            glowRadius={15}
+            glowIntensity={0.8}
+            backgroundColor="transparent"
+            colors={['#00d0ff', '#0800ff', '#ff00aa']}
+          >
+            <Link href="/admin" className="glow-btn" style={{ textDecoration: 'none', border: 'none', boxShadow: 'none', display: 'block', padding: '10px 20px' }}>
+              Admin
             </Link>
           </BorderGlow>
         </div>

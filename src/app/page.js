@@ -7,6 +7,16 @@ import BorderGlow from '@/components/BorderGlow';
 import VariableProximity from '@/components/VariableProximity';
 import BounceCards from '@/components/BounceCards';
 import SpotlightCard from '@/components/SpotlightCard';
+import CircularGallery from '@/components/CircularGallery';
+
+const projectItems = [
+  { image: '/projects/b.png', text: 'Knowledge Book' },
+  { image: '/projects/c.png', text: 'CopBot AI' },
+  { image: '/projects/deep.png', text: 'Deep Scan' },
+  { image: '/projects/hear.png', text: 'Hear It' },
+  {image: '/projects/p.png', text: 'Plantiva'},
+  { image: '/projects/voice.png', text: 'Voice AI' },
+];
 
 const teamMembers = [
   {
@@ -275,6 +285,43 @@ export default function Home() {
               description="Optimized for performance and SEO to reach users everywhere."
               spotlightColor="rgba(255, 0, 170, 0.2)"
             />
+          </div>
+        </div>
+      </section>
+
+      {/* Project Gallery Section */}
+      <section style={{ height: '650px', position: 'relative', padding: '4rem 0', marginBottom: '4rem' }}>
+        <div className="container">
+          <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
+            <h2 style={{ fontSize: '2.5rem', marginBottom: '1rem', fontWeight: '800' }}>Featured <span className="text-gradient">Projects</span></h2>
+            <p style={{ opacity: 0.6 }}>A glimpse into our digital craftsmanship.</p>
+          </div>
+        </div>
+        <div style={{ height: '550px', position: 'relative' }}>
+          <CircularGallery items={projectItems} bend={3} textColor="#ffffff" borderRadius={0.05} scrollEase={0.02}/>
+        </div>
+        <div style={{ textAlign: 'center', marginTop: '2rem' }}>
+          <div style={{ display: 'inline-block' }}>
+            <BorderGlow
+              borderRadius={12}
+              glowRadius={20}
+              glowIntensity={1.2}
+              backgroundColor="transparent"
+              colors={['#00d0ff', '#0800ff', '#ff00aa']}
+            >
+              <Link href="/projects" className="glow-btn interactive" style={{ 
+                padding: '12px 30px', 
+                fontSize: '1rem', 
+                border: 'none', 
+                boxShadow: 'none', 
+                textDecoration: 'none',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '0.5rem'
+              }}>
+                View All Projects <ArrowRight size={18} />
+              </Link>
+            </BorderGlow>
           </div>
         </div>
       </section>

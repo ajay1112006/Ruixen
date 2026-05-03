@@ -1,0 +1,46 @@
+              Project Description
+
+Plantiva
+
+Plantiva is an AI-based plant disease analysis system specially build to help farmers.users need to upload the pictures of the diseased plants or crops , the AI would analyze and suggest the possible ways to cure it and proper medications required.
+
+
+
+CopBot
+
+
+
+CopBot is an AI-powered ChatBot which is used to clarify public’s doubts about Indian Law and Order rights and acts.
+
+
+
+Book Emulator
+
+
+
+Book Emulator is AI-driven tool for students where their staffs could upload notes and study materials and students can access the notes via AI and summarizes their answers.
+
+
+
+DeepFake Detector
+
+
+
+DeepFake Detector is a tool which is used to detect images or videos or texts which were morphed or generated using AI.
+
+
+
+Hear Connect
+
+
+
+Hear Connect is tool which is especially built for deaf people where they can convert their sign language into text.
+
+
+
+Voice Assistant
+
+
+
+Voice Assistant is a AI agent which perform tasks just by simple commands it’s built along with the system , it also enables blind people to use computer.
+
