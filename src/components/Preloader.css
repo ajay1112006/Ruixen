@@ -1,0 +1,82 @@
+.preloader-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: #050505;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  overflow: hidden;
+}
+
+.preloader-content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+}
+
+.flicker-image-wrapper {
+  position: relative;
+  filter: drop-shadow(0 0 30px rgba(0, 208, 255, 0.4));
+  animation: flicker 4s infinite;
+}
+
+.preloader-image {
+  object-fit: contain;
+  max-width: 80vw;
+  height: auto;
+}
+
+.preloader-progress {
+  width: 200px;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.preloader-bar {
+  height: 100%;
+  background: linear-gradient(90deg, #00d0ff, #ff00aa);
+  box-shadow: 0 0 10px #00d0ff;
+}
+
+@keyframes flicker {
+  0%, 19.999%, 22%, 62.999%, 64%, 64.999%, 70%, 100% {
+    opacity: 1;
+    filter: drop-shadow(0 0 30px rgba(0, 208, 255, 0.4)) brightness(1);
+  }
+  20%, 21.999%, 63%, 63.999%, 65%, 69.999% {
+    opacity: 0.4;
+    filter: drop-shadow(0 0 10px rgba(0, 208, 255, 0.2)) brightness(0.8);
+  }
+}
+
+/* Glitch effect on top of flicker */
+.preloader-container::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 208, 255, 0.05) 3px,
+    transparent 3px
+  );
+  pointer-events: none;
+  animation: scan 10s linear infinite;
+}
+
+@keyframes scan {
+  from { background-position: 0 0; }
+  to { background-position: 0 100%; }
+}

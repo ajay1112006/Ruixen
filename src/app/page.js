@@ -1,13 +1,15 @@
 "use client";
-import React, { useRef } from 'react';
-import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
+import React, { useState, useEffect, useRef } from 'react';
+import { motion, useMotionValue, useSpring, useTransform, AnimatePresence } from 'framer-motion';
 import { ArrowRight, Code, Cpu, Globe, Rocket } from 'lucide-react';
 import Link from 'next/link';
+import Image from 'next/image';
 import BorderGlow from '@/components/BorderGlow';
 import VariableProximity from '@/components/VariableProximity';
 import BounceCards from '@/components/BounceCards';
 import SpotlightCard from '@/components/SpotlightCard';
 import CircularGallery from '@/components/CircularGallery';
+import Preloader from '@/components/Preloader';
 
 const projectItems = [
   { image: '/projects/b.png', text: 'Knowledge Book' },
@@ -46,7 +48,9 @@ const teamMembers = [
 ];
 
 export default function Home() {
+  const [loading, setLoading] = useState(true);
   const containerRef = useRef(null);
+
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -67,7 +71,17 @@ export default function Home() {
   };
 
   return (
-    <div>
+    <>
+      <AnimatePresence mode="wait">
+        {loading ? (
+          <Preloader key="preloader" onComplete={() => setLoading(false)} />
+        ) : (
+          <motion.div
+            key="content"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1 }}
+          >
       {/* Hero Section */}
       <section 
         ref={containerRef}
@@ -349,7 +363,10 @@ export default function Home() {
           </div>
         </div>
       </section>
-    </div>
+    </motion.div>
+        )}
+      </AnimatePresence>
+    </>
   );
 }
 

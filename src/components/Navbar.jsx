@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
+import Image from 'next/image';
 import BorderGlow from './BorderGlow';
 
 const Navbar = () => {
@@ -29,8 +30,19 @@ const Navbar = () => {
       }}
     >
       <div className="container" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <Link href="/" className="text-gradient" style={{ fontSize: '1.8rem', fontWeight: '900', letterSpacing: '-1.5px', textTransform: 'uppercase' }}>
-          RUIXEN
+        <Link href="/" style={{ display: 'flex', alignItems: 'center' }}>
+          <Image
+            src="/title.png"
+            alt="Ruixen Logo"
+            width={150}
+            height={50}
+            priority
+            style={{
+              width: 'auto',
+              height: '40px',
+              objectFit: 'contain'
+            }}
+          />
         </Link>
 
         <div style={{ display: 'flex', gap: '1.5rem', alignItems: 'center' }}>
