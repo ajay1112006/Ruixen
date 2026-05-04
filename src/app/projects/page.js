@@ -48,6 +48,14 @@ const projects = [
     image: "/projects/voice.png",
     tech: ["Voice UI", "Accessibility", "AI Agent"],
     color: "#f97316" // Orange
+  },
+  {
+    title: "DMI College Website",
+    description: "The official website of DMI College of Engineering, developed by our team to provide a modern, high-performance digital presence for the institution.",
+    image: "/projects/d.png",
+    tech: ["Web Development", "Next.js", "Institutional"],
+    color: "#fbbf24", // Yellow
+    hasBlackBackground: true
   }
 ];
 
@@ -94,7 +102,7 @@ const ProjectCard = ({ project, index }) => {
   };
 
   return (
-    <motion.div 
+    <motion.div
       variants={itemVariants}
       style={{ perspective: 1200 }}
     >
@@ -123,6 +131,7 @@ const ProjectCard = ({ project, index }) => {
                 alt={project.title}
                 fill
                 className={styles.projectImage}
+                style={project.hasBlackBackground ? { objectFit: 'contain', padding: '3rem' } : {}}
               />
             </div>
             <div className={styles.projectContent} style={{ transform: 'translateZ(50px)' }}>
@@ -146,7 +155,7 @@ export default function Projects() {
     <div className={styles.projectsPage}>
       <div className="container">
         {/* Hero Section */}
-        <motion.div 
+        <motion.div
           className={styles.heroSection}
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -161,7 +170,7 @@ export default function Projects() {
         </motion.div>
 
         {/* Projects Grid */}
-        <motion.div 
+        <motion.div
           className={styles.projectsGrid}
           variants={containerVariants}
           initial="hidden"
@@ -173,7 +182,7 @@ export default function Projects() {
         </motion.div>
 
         {/* CTA Section */}
-        <motion.div 
+        <motion.div
           className={styles.ctaSection}
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}

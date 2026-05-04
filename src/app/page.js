@@ -18,6 +18,7 @@ const projectItems = [
   { image: '/projects/hear.png', text: 'Hear It' },
   {image: '/projects/p.png', text: 'Plantiva'},
   { image: '/projects/voice.png', text: 'Voice AI' },
+  { image: '/projects/d.png', text: 'DMI College', hasBlackBackground: true },
 ];
 
 const teamMembers = [

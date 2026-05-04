@@ -108,7 +108,8 @@ class Media {
     bend,
     textColor,
     borderRadius = 0,
-    font
+    font,
+    hasBlackBackground = false
   }) {
     this.extra = 0;
     this.geometry = geometry;
@@ -125,6 +126,7 @@ class Media {
     this.textColor = textColor;
     this.borderRadius = borderRadius;
     this.font = font;
+    this.hasBlackBackground = hasBlackBackground;
     this.createShader();
     this.createMesh();
     this.createTitle();
@@ -160,6 +162,7 @@ class Media {
         uniform sampler2D tMap;
         uniform float uBorderRadius;
         uniform vec3 uGlowColor;
+        uniform float uBlackBackground;
         varying vec2 vUv;
         
         float roundedBoxSDF(vec2 p, vec2 b, float r) {
@@ -169,12 +172,27 @@ class Media {
         
         void main() {
           // Scale UVs to keep image centered while mesh is larger
-          vec2 uvImg = (vUv - 0.5) * 1.2 + 0.5;
+          // Use less zoom for logos to ensure the full circular logo is visible
+          float uvScale = uBlackBackground > 0.5 ? 1.1 : 1.2;
+          vec2 uvImg = (vUv - 0.5) * uvScale + 0.5;
+          
+          float planeAspect = uPlaneSizes.x / uPlaneSizes.y;
+          float imageAspect = uImageSizes.x / uImageSizes.y;
           
           vec2 ratio = vec2(
-            min((uPlaneSizes.x / uPlaneSizes.y) / (uImageSizes.x / uImageSizes.y), 1.0),
-            min((uPlaneSizes.y / uPlaneSizes.x) / (uImageSizes.y / uImageSizes.x), 1.0)
+            min(planeAspect / imageAspect, 1.0),
+            min(imageAspect / planeAspect, 1.0)
           );
+          
+          // For logos, use "contain" logic instead of "cover"
+          if (uBlackBackground > 0.5) {
+            if (planeAspect > imageAspect) {
+              ratio = vec2(planeAspect / imageAspect, 1.0);
+            } else {
+              ratio = vec2(1.0, imageAspect / planeAspect);
+            }
+          }
+          
           vec2 uv = vec2(
             uvImg.x * ratio.x + (1.0 - ratio.x) * 0.5,
             uvImg.y * ratio.y + (1.0 - ratio.y) * 0.5
@@ -188,7 +206,17 @@ class Media {
           
           // Outer glow - slightly wider but still soft
           float glow = smoothstep(0.4, -0.05, d);
-          vec3 finalColor = mix(uGlowColor * glow * 0.8, color.rgb, alpha);
+          
+          // Apply black background if requested (for transparent logos/white squares)
+          vec3 texColor = color.rgb;
+          if (uBlackBackground > 0.5) {
+            // Apply a circular mask to remove white corners from square logo images
+            float distFromCenter = length(uvImg - 0.5);
+            float circleMask = 1.0 - smoothstep(0.48, 0.5, distFromCenter);
+            texColor = mix(vec3(0.0), color.rgb, circleMask * color.a);
+          }
+          
+          vec3 finalColor = mix(uGlowColor * glow * 0.8, texColor, alpha);
           float finalAlpha = max(alpha, glow * 0.4);
           
           gl_FragColor = vec4(finalColor, finalAlpha);
@@ -201,7 +229,8 @@ class Media {
         uSpeed: { value: 0 },
         uTime: { value: 100 * Math.random() },
         uBorderRadius: { value: this.borderRadius },
-        uGlowColor: { value: [0, 0.8, 1.0] } // Default cyan
+        uGlowColor: { value: [0, 0.8, 1.0] }, // Default cyan
+        uBlackBackground: { value: this.hasBlackBackground ? 1.0 : 0.0 }
       },
       transparent: true
     });
@@ -380,7 +409,8 @@ class App {
         bend,
         textColor,
         borderRadius,
-        font
+        font,
+        hasBlackBackground: data.hasBlackBackground
       });
       media.program.uniforms.uGlowColor.value = color;
       return media;
