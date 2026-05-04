@@ -23,7 +23,7 @@
 .flicker-image-wrapper {
   position: relative;
   filter: drop-shadow(0 0 30px rgba(0, 208, 255, 0.4));
-  animation: flicker 4s infinite;
+  animation: flicker 2s infinite;
 }
 
 .preloader-image {

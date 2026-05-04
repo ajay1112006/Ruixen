@@ -37,11 +37,11 @@ const Preloader = ({ onComplete }) => {
       }
     }, 50);
 
-    // End after 5 seconds
+    // End after 2 seconds (plus 1s fade = 3s total)
     const timer = setTimeout(() => {
       setIsVisible(false);
       setTimeout(onComplete, 1000); // Allow fade animation to finish
-    }, 5000);
+    }, 2000);
 
     return () => {
       clearInterval(cycleInterval);
@@ -91,7 +91,7 @@ const Preloader = ({ onComplete }) => {
                 className="preloader-bar"
                 initial={{ width: "0%" }}
                 animate={{ width: "100%" }}
-                transition={{ duration: 5, ease: "linear" }}
+                transition={{ duration: 2, ease: "linear" }}
               />
             </div>
           </div>
